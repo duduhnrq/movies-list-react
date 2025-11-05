@@ -1,6 +1,6 @@
 function MovieFilter() {
     return (
-        <div className="w-6xl bg-black-200 text-sm m-auto mt-5 p-5 rounded-lg border border-black-300 text-white flex gap-5">
+        <div className="w-6xl bg-black-200 text-sm m-auto my-0 p-5 rounded-lg border border-black-300 text-white flex gap-5">
             <div className="flex flex-col w-full">
                 <label htmlFor="title-search" className='mb-2'>Buscar por título:</label>
                 <input type="text" id="title-search" placeholder="Digite o título do filme" className='bg-black-300 rounded-lg p-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-light transition-all duration-200 ease-in-out' />
