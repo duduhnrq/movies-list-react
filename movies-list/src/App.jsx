@@ -16,6 +16,8 @@ function App() {
     }
   });
 
+  const [filters, setFilters] = useState({ query: "", genre: "" });
+
   useEffect(() => {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(movies));
   }, [movies]);
@@ -29,15 +31,42 @@ function App() {
     setMovies((prev) => prev.filter((m) => m.id !== id));
   }
 
+  function handleEditMovie(editedMovie) {
+    if (!editedMovie?.id || editedMovie.id == null) return;
+    setMovies((prev) =>
+      prev.map((m) => (m.id === editedMovie.id ? editedMovie : m))
+    );
+  }
+
+  const filteredMovies = movies.filter((movie) => {
+    const title = (movie?.title || "").toLowerCase();
+    const q = (filters.query || "").trim().toLowerCase();
+    if (q && !title.includes(q)) {
+      return false;
+    }
+    if (
+      filters.genre &&
+      filters.genre !== "" &&
+      (movie?.genre || "") !== filters.genre
+    ) {
+      return false;
+    }
+    return true;
+  });
+
   return (
     <div className="bg-black-100 min-h-screen flex flex-col">
       <Header />
       <MovieForm onAddMovie={handleAddMovie} />
-      <MovieFilter />
-      <MovieList movies={movies} onRemove={handleRemoveMovie} />
+      <MovieFilter filters={filters} onChange={setFilters} />
+      <MovieList
+        movies={filteredMovies}
+        onRemove={handleRemoveMovie}
+        onEdit={handleEditMovie}
+      />
       <Footer />
     </div>
-  )
+  );
 }
 
 export default App;
